@@ -1,12 +1,18 @@
-import { Component } from '../@lib/component.js'
+import { Component } from 'webc'
+import './Nested'
 
-class HomePage extends Component {
-  constructor() {
-    super()
+interface IHomeState {
+  value: string
+  counter: number
+}
 
-    this.state.value = 'heh'
-    this.state.counter = 0
+class HomePage extends Component<{}, IHomeState> {
+  state = {
+    value: 'heh',
+    counter: 0
+  }
 
+  init() {
     this.find('btn').onClick(this.onClick)
     this.find('input').onChange(this.onChange)
 
@@ -24,6 +30,7 @@ class HomePage extends Component {
   }
 
   render() {
+    console.log('render')
     return `
       <style>
         :host {
@@ -37,6 +44,7 @@ class HomePage extends Component {
       <input id="input" type="text" value="${this.state.counter}" />
       ${this.state.value}
       ${this.state.counter}
+      <nested-page counter="${this.state.counter}"/>
     `
   }
 }
