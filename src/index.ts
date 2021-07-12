@@ -5,7 +5,7 @@ class Component extends HTMLElement {
   }
 }
 
-export const C = <P = void, S = any>(type = HTMLElement) =>
+export const C = <P = void, S = any>(type = Component) =>
   class extends type {
     props: P
     state: S
