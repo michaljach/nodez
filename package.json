@@ -1,19 +1,19 @@
 {
   "name": "webelementz",
-  "version": "0.1.0",
-  "description": "",
+  "version": "0.1.1",
+  "description": "Super simple and fast WebComponents",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "esbuild ./src/index.ts --outfile=dist/index.js --bundle --platform=node --minify && npm run types",
-    "types": "tsc --emitDeclarationOnly",
     "lint": "eslint ./src/**/*",
-    "start": "esbuild ./demo/index.js --outfile=demo/main.js --bundle --servedir=demo"
+    "build": "tsc"
   },
-  "author": "",
+  "author": "Michael Jach <michaljach@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "esbuild": "^0.12.9",
     "eslint": "^7.28.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.23.4",

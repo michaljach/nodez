@@ -1,1 +1,104 @@
-var a=Object.defineProperty;var u=r=>a(r,"__esModule",{value:!0});var m=(r,s)=>{u(r);for(var e in s)a(r,e,{get:s[e],enumerable:!0})};m(exports,{Component:()=>h});var h=class extends HTMLElement{constructor(){super();this.attachShadow({mode:"open"})}connectedCallback(){this.state=new Proxy(this.state||{},{get:(s,e)=>Reflect.get(s,e),set:(s,e,t)=>{let n=Reflect.set(s,e,t);return this._render(),n}}),this.props=new Proxy({},{get:(s,e)=>this.getAttribute(e),set:(s,e,t)=>Reflect.set(s,e,t)}),this._render(),this.init()}init(){}find(s){let e=this,t=this.shadowRoot.getElementById(s);return t.listeners=[],{element:t,onClick(n){this.element.addEventListener("click",n.bind(e)),this.element.listeners.push({type:"click",event:n.bind(e)})},onChange(n){this.element.addEventListener("keyup",n.bind(e)),this.element.listeners.push({type:"keyup",event:n.bind(e)})}}}render(){throw new Error("render() method not implemented.")}_render(){let s=document.createElement("template");s.innerHTML=this.render();let e=this.virtualDom,t=Array.from(s.content.childNodes);e?this.diff(e,t):this.shadowRoot.appendChild(s.content),this.virtualDom=Array.from(this.shadowRoot.childNodes)}diff(s,e){s.forEach((t,n)=>{let i=t.nodeName==="INPUT"?"value":"textContent";customElements.get(t.nodeName.toLowerCase())?(t.getAttributeNames().forEach(o=>{let c=t.getAttribute(o),l=e[n].getAttribute("counter");if(c!==l){t.setAttribute(o,l);let d=this.props;d[o]=l}}),t._render()):t[i]!==e[n][i]&&(i!=="value"?this.shadowRoot.replaceChild(e[n],t):(t.value=e[n].value||t.value,t.setAttribute("value",t.value)))})}};0&&(module.exports={Component});
+class Component extends HTMLElement {
+    init() { }
+    render() {
+        throw Error('Render function not implemented.');
+    }
+}
+export const C = (type = HTMLElement) => class extends type {
+    connectedCallback() {
+        this.state = new Proxy(this.state || {}, {
+            get: (store, name) => {
+                return Reflect.get(store, name);
+            },
+            set: (store, prop, value) => {
+                const result = Reflect.set(store, prop, value);
+                this._render();
+                return result;
+            }
+        });
+        this.props = new Proxy({}, {
+            get: (store, name) => {
+                return this.getAttribute(name);
+            },
+            set: (store, prop, value) => {
+                return Reflect.set(store, prop, value);
+            }
+        });
+        this._render();
+        if (this.init) {
+            this.init();
+        }
+    }
+    find(id) {
+        const context = this;
+        const element = document.getElementById(id);
+        element.listeners = [];
+        return {
+            element,
+            onClick(event) {
+                this.element.addEventListener('click', event.bind(context));
+                this.element.listeners.push({
+                    type: 'click',
+                    event: event.bind(context)
+                });
+            },
+            onChange(event) {
+                this.element.addEventListener('keyup', event.bind(context));
+                this.element.listeners.push({
+                    type: 'keyup',
+                    event: event.bind(context)
+                });
+            }
+        };
+    }
+    _render() {
+        const template = document.createElement('template');
+        template.innerHTML = this.render();
+        const previous = this.virtualDom;
+        const next = Array.from(template.content.childNodes);
+        if (previous) {
+            this.diff(previous, next);
+        }
+        else {
+            this.appendChild(template.content);
+        }
+        this.virtualDom = Array.from(this.childNodes);
+    }
+    diff(previous, next) {
+        const diffNodes = next.length - previous.length;
+        if (diffNodes < 0) {
+            previous.slice(diffNodes).forEach((elem) => {
+                this.removeChild(elem);
+            });
+        }
+        next.forEach((node, i) => {
+            if (previous[i]) {
+                const key = previous[i].nodeName === 'INPUT' ? 'value' : 'textContent';
+                if (customElements.get(node.nodeName.toLowerCase())) {
+                    node.getAttributeNames().forEach((attributeName) => {
+                        const prevValue = previous[i].getAttribute(attributeName);
+                        const nextValue = node.getAttribute('counter');
+                        if (prevValue !== nextValue) {
+                            previous[i].setAttribute(attributeName, nextValue);
+                            const props = this.props;
+                            props[attributeName] = nextValue;
+                        }
+                    });
+                    previous[i]._render();
+                }
+                else if (previous[i][key] !== node[key]) {
+                    if (key !== 'value') {
+                        this.replaceChild(node, previous[i]);
+                    }
+                    else {
+                        previous[i].value = node.value || previous[i].value;
+                        previous[i].setAttribute('value', previous[i].value);
+                    }
+                }
+            }
+            else {
+                this.appendChild(node);
+            }
+        });
+    }
+};
