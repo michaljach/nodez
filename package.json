@@ -1,6 +1,6 @@
 {
-  "name": "webelementz",
-  "version": "0.1.4",
+  "name": "nodez",
+  "version": "0.1.0",
   "description": "Super simple and fast WebComponents",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

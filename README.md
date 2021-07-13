@@ -8,7 +8,7 @@ Zero dependency, super simple framework based on native Web Components.
 
 `npm i webelementz`
 
-### Usage
+### Simple usage
 
 ```
 import { C } from 'webelementz'
@@ -16,7 +16,7 @@ import { C } from 'webelementz'
 class Component extends C() {
   render() {
     return `
-      Hello World !
+      <h1>Hello World !</h1>
     `
   }
 }
