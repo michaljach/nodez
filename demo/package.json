@@ -1,0 +1,15 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "esbuild src/index.ts --outfile=www/index.js --servedir=www --bundle",
+    "build": "esbuild src/index.ts --outfile=www/index.js --minify --bundle"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.12.15"
+  }
+}

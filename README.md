@@ -11,15 +11,15 @@ Zero dependency, super simple framework based on native Web Components.
 ### Simple usage
 
 ```
-import { C } from 'webelementz'
+import { C } from 'nodez'
 
-class Component extends C() {
+class Home extends C() {
   render() {
-    return `
-      <h1>Hello World !</h1>
-    `
+    return `<h1>Hello World !</h1>`
   }
 }
+
+customElements.define('home-component', Home)
 ```
 
 ### Development

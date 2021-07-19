@@ -4,7 +4,7 @@
     "noImplicitAny": true,
     "removeComments": true,
     "lib": ["DOM", "ES2017"],
-    "outDir": "dist",
+    "outDir": "lib",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "target": "es2015"

@@ -2,8 +2,8 @@
   "name": "nodez",
   "version": "0.1.0",
   "description": "Super simple and fast WebComponents",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
     "dist/*/**"
   ],
